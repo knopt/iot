@@ -1,15 +1,7 @@
 package main
 
-import (
-	"fmt"
-	"net/http"
-)
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Work in progress: %s!", r.URL.Path[1:])
-}
+import "github.com/knopt/iot/backend/server"
 
 func main() {
-	http.HandleFunc("/", handler)
-	http.ListenAndServe(":8080", nil)
+	server.StartServer()
 }
