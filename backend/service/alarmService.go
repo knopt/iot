@@ -33,6 +33,7 @@ func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) *databaseModel.A
 
 func databaseAlarmToAPIAlarmForm(alarm *databaseModel.Alarm) *apiModel.AlarmForm {
 	return &apiModel.AlarmForm{
+		ID:           alarm.ID.Hex(),
 		AlarmTime:    alarm.AlarmTime,
 		CreatedAt:    alarm.CreatedAt,
 		Description:  alarm.Description,
