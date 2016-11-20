@@ -8,7 +8,6 @@ import (
 )
 
 // GetAlarm by id from database and return to API
-// TODO: implement
 func (service *Service) GetAlarm(alarmID string) *apiModel.AlarmForm {
 	dbAlarm := service.db.GetAlarm(bson.ObjectIdHex(alarmID))
 	return databaseAlarmToAPIAlarmForm(dbAlarm)
