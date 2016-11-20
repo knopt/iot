@@ -1,7 +1,6 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 
 	"gopkg.in/gin-gonic/gin.v1"
@@ -9,6 +8,5 @@ import (
 
 // RegisterDevice register device and return id
 func (api *Api) RegisterDevice(context *gin.Context) {
-	fmt.Printf("RegisterDevice api call. To be implemented\n")
-	context.JSON(http.StatusOK, gin.H{"id": "1"})
+	context.JSON(http.StatusOK, gin.H{"status": "To be implemented.", "mock_id": "123456789012345678901234"})
 }
