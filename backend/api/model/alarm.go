@@ -4,6 +4,7 @@ import "time"
 
 // AlarmForm model
 type AlarmForm struct {
+	ID           string       `json:"id"`
 	AlarmTime    time.Time    `json:"alarm_time" binding:"required"`
 	CreatedAt    time.Time    `json:"created_at" binding:"required"`
 	Description  string       `json:"description"`

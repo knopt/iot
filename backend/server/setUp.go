@@ -37,7 +37,8 @@ func setUpRouter(router *gin.Engine, api *apis.Api) {
 		}
 		device := allRoutes.Group("device")
 		{
-			device.GET("/register", api.RegisterDevice)
+			device.POST("register", api.RegisterDevice)
+			device.GET("get/:id", api.GetDevice)
 		}
 	}
 
