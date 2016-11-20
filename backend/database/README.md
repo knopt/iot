@@ -4,3 +4,5 @@ install MongoDB 3.2
 
 `db.createCollection("alarm")`
 `db.createCollection("device")`
+
+service mongod start - starts mongoDB

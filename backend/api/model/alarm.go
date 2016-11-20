@@ -4,9 +4,10 @@ import "time"
 
 // AlarmForm model
 type AlarmForm struct {
-	DeviceID     int64        `json:"device_id" binding:"required"`
-	Time         time.Time    `json:"time" binding:"required"`
-	Day          time.Weekday `json:"weekday" binding:"required"`
+	AlarmTime    time.Time    `json:"alarm_time" binding:"required"`
+	CreatedAt    time.Time    `json:"created_at" binding:"required"`
+	Description  string       `json:"description"`
+	DeviceID     string       `json:"device_id" binding:"required"`
 	RepeatWeekly bool         `json:"repeat_weekly" binding:"required"`
-	CreatedAt    time.Time    `json:"creation_date_time" binding:"required"`
+	Weekday      time.Weekday `json:"weekday" binding:"required"`
 }

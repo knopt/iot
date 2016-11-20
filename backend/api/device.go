@@ -8,7 +8,7 @@ import (
 )
 
 // RegisterDevice register device and return id
-func RegisterDevice(context *gin.Context) {
+func (api *Api) RegisterDevice(context *gin.Context) {
 	fmt.Printf("RegisterDevice api call. To be implemented\n")
 	context.JSON(http.StatusOK, gin.H{"id": "1"})
 }
