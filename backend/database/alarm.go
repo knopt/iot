@@ -9,22 +9,22 @@ import (
 )
 
 // GetAlarm by alarmID
-func (database *Database) GetAlarm(alarmID bson.ObjectId) *model.Alarm {
+func (database *Database) GetAlarm(alarmID bson.ObjectId) (*model.Alarm, error) {
 	var alarm model.Alarm
 	err := database.db.C("alarm").FindId(alarmID).One(&alarm)
 	if err != nil {
-		panic(err)
+		return nil, err
 	}
-	return &alarm
+	return &alarm, nil
 }
 
 // InsertAlarm into database
-func (database *Database) InsertAlarm(alarm *model.Alarm) bson.ObjectId {
+func (database *Database) InsertAlarm(alarm *model.Alarm) (*bson.ObjectId, error) {
 	alarm.ID = bson.NewObjectId()
 	alarm.UploadedAt = time.Now()
 	if err := database.db.C("alarm").Insert(alarm); err != nil {
-		panic(err)
+		return nil, err
 	}
 
-	return alarm.ID
+	return &alarm.ID, nil
 }

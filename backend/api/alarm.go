@@ -7,6 +7,7 @@ import (
 	"gopkg.in/gin-gonic/gin.v1"
 
 	"github.com/knopt/iot/backend/api/model"
+	"github.com/knopt/iot/backend/error"
 )
 
 // SetAlarm for given device
@@ -18,7 +19,10 @@ func (api *Api) SetAlarm(context *gin.Context) {
 		return
 	}
 
-	alarmID := api.Service.CreateAlarm(&alarmForm)
+	alarmID, err := api.Service.CreateAlarm(&alarmForm)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+	}
 
 	context.JSON(http.StatusCreated, gin.H{"id": alarmID})
 }
@@ -27,7 +31,10 @@ func (api *Api) SetAlarm(context *gin.Context) {
 func (api *Api) GetAlarm(context *gin.Context) {
 	id := context.Param("id")
 
-	responseAlarm := api.Service.GetAlarm(id)
+	responseAlarm, err := api.Service.GetAlarm(id)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+	}
 
 	context.IndentedJSON(http.StatusOK, responseAlarm)
 }
