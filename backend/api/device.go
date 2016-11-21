@@ -3,16 +3,20 @@ package api
 import (
 	"net/http"
 
-	"github.com/knopt/iot/backend/api/model"
-
 	"gopkg.in/gin-gonic/gin.v1"
+
+	"github.com/knopt/iot/backend/api/model"
+	"github.com/knopt/iot/backend/error"
 )
 
 // GetDevice by given id
 func (api *Api) GetDevice(context *gin.Context) {
 	id := context.Param("id")
 
-	responseDevice := api.Service.GetDevice(id)
+	responseDevice, err := api.Service.GetDevice(id)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+	}
 
 	context.IndentedJSON(http.StatusOK, responseDevice)
 }
@@ -26,7 +30,10 @@ func (api *Api) RegisterDevice(context *gin.Context) {
 		return
 	}
 
-	deviceID := api.Service.RegisterDevice(&deviceForm)
+	deviceID, err := api.Service.RegisterDevice(&deviceForm)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+	}
 
 	context.JSON(http.StatusCreated, gin.H{"id": deviceID})
 }

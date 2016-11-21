@@ -8,16 +8,24 @@ import (
 )
 
 // GetDevice by id from database and return to API
-func (service *Service) GetDevice(deviceID string) *apiModel.DeviceForm {
-	dbDevice := service.db.GetDevice(bson.ObjectIdHex(deviceID))
-	return databaseDeviceToAPIDeviceForm(dbDevice)
+func (service *Service) GetDevice(deviceID string) (*apiModel.DeviceForm, error) {
+	dbDevice, err := service.db.GetDevice(bson.ObjectIdHex(deviceID))
+	if err != nil {
+		return nil, err
+	}
+	return databaseDeviceToAPIDeviceForm(dbDevice), nil
 }
 
 // RegisterDevice in database and return its ID to API
-func (service *Service) RegisterDevice(deviceForm *apiModel.DeviceForm) string {
+func (service *Service) RegisterDevice(deviceForm *apiModel.DeviceForm) (*string, error) {
 	device := apiDeviceFormToDatabaseDevice(deviceForm)
-	deviceBsonID := service.db.InsertDevice(device)
-	return deviceBsonID.Hex()
+	deviceBsonID, err := service.db.InsertDevice(device)
+	if err != nil {
+		return nil, err
+	}
+
+	deviceHexBsonID := deviceBsonID.Hex()
+	return &deviceHexBsonID, nil
 }
 
 func apiDeviceFormToDatabaseDevice(deviceForm *apiModel.DeviceForm) *databaseModel.Device {
