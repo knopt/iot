@@ -33,7 +33,6 @@ $ cd $GOPATH/src/github.com/knopt/iot/backend
 $ go get .
 $ go install
 $ $GOPATH/bin/backend
-
 ```
 
 ## Frontend
