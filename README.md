@@ -26,7 +26,7 @@ $ mongo
 ```
 Now your database `iot` should be running on default port  
 
-Start server:
+Start server
 ```
 $ go get github.com/knopt/iot  
 $ cd $GOPATH/src/github.com/knopt/iot/backend  
