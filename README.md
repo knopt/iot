@@ -19,9 +19,9 @@ Start mongodb
 ```
 $ sudo service start mongod
 ```
-Create database `iot`:
+Create database `iot`
 ```
-$mongod
+$ mongo
 > use iot
 ```
 Now your database `iot` should be running on default port  
