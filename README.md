@@ -8,7 +8,7 @@ This is repository will include web server to store statistics from alarm gather
    Backend: Golang + MongoDB  
    Frontend: Angular2  
 
-###Set up
+### Set up
 
 Install [golang](https://golang.org/dl/)
 Install [mongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
@@ -17,25 +17,27 @@ Clone this repository
   
 Start mongodb
 ```
-$sudo service start mongod
+$ sudo service start mongod
 ```
-Create database `iot`
+Create database `iot`:
 ```
 $mongod
-
 > use iot
 ```
-Now your database should be running on default port  
+Now your database `iot` should be running on default port  
 
-Start server  
+Start server:
 ```
-go get github.com/knopt/iot  
+$ go get github.com/knopt/iot  
 $ cd $GOPATH/src/github.com/knopt/iot/backend  
 $ go get .
 $ go install
 $ $GOPATH/bin/backend
 
 ```
+
+## Frontend
+TBA
 
 ## Physical device software
 TBA
