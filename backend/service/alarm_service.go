@@ -1,6 +1,8 @@
 package service
 
 import (
+	"errors"
+
 	"gopkg.in/mgo.v2/bson"
 
 	apiModel "github.com/knopt/iot/backend/api/model"
@@ -18,7 +20,10 @@ func (service *Service) GetAlarm(alarmID string) (*apiModel.AlarmForm, error) {
 
 // CreateAlarm in database and return its ID to API
 func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, error) {
-	alarm := apiAlarmFormToDatabaseAlarm(alarmForm)
+	alarm, err := apiAlarmFormToDatabaseAlarm(alarmForm)
+	if err != nil {
+		return nil, err
+	}
 	alarmBsonID, err := service.db.InsertAlarm(alarm)
 	if err != nil {
 		return nil, err
@@ -27,7 +32,12 @@ func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, err
 	return &alarmHexBsonID, nil
 }
 
-func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) *databaseModel.Alarm {
+func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) (*databaseModel.Alarm, error) {
+	if len(alarmForm.DeviceID) != 24 {
+		return nil, errors.New("Wrong deviceID length")
+	} else if bson.IsObjectIdHex(alarmForm.DeviceID) {
+		return nil, errors.New("Wrong format of deviceID")
+	}
 	return &databaseModel.Alarm{
 		AlarmTime:    alarmForm.AlarmTime,
 		CreatedAt:    alarmForm.CreatedAt,
@@ -35,7 +45,7 @@ func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) *databaseModel.A
 		DeviceID:     bson.ObjectIdHex(alarmForm.DeviceID),
 		RepeatWeekly: alarmForm.RepeatWeekly,
 		Weekday:      alarmForm.Weekday,
-	}
+	}, nil
 }
 
 func databaseAlarmToAPIAlarmForm(alarm *databaseModel.Alarm) *apiModel.AlarmForm {

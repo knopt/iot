@@ -15,13 +15,14 @@ func (api *Api) SetAlarm(context *gin.Context) {
 	var alarmForm model.AlarmForm
 
 	if err := context.BindJSON(&alarmForm); err != nil {
-		context.AbortWithError(http.StatusBadRequest, err)
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
 		return
 	}
 
 	alarmID, err := api.Service.CreateAlarm(&alarmForm)
 	if err != nil {
 		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
 	}
 
 	context.JSON(http.StatusCreated, gin.H{"id": alarmID})
@@ -34,6 +35,7 @@ func (api *Api) GetAlarm(context *gin.Context) {
 	responseAlarm, err := api.Service.GetAlarm(id)
 	if err != nil {
 		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
 	}
 
 	context.IndentedJSON(http.StatusOK, responseAlarm)
