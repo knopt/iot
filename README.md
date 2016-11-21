@@ -10,8 +10,8 @@ This is repository will include web server to store statistics from alarm gather
 
 ### Set up
 
-Install [golang](https://golang.org/dl/)
-Install [mongoDB](https://www.mongodb.com/download-center?jmp=nav#community)
+Install [golang](https://golang.org/dl/)  
+Install [mongoDB](https://www.mongodb.com/download-center?jmp=nav#community)  
 
 Clone this repository  
   
