@@ -35,7 +35,7 @@ func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, err
 func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) (*databaseModel.Alarm, error) {
 	if len(alarmForm.DeviceID) != 24 {
 		return nil, errors.New("Wrong deviceID length")
-	} else if bson.IsObjectIdHex(alarmForm.DeviceID) {
+	} else if !bson.IsObjectIdHex(alarmForm.DeviceID) {
 		return nil, errors.New("Wrong format of deviceID")
 	}
 	return &databaseModel.Alarm{

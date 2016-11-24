@@ -12,14 +12,14 @@ import (
 )
 
 // StartServer starts server at given port
-func StartServer(port string) {
+func StartServer(ip string) {
 	dbConnection := db.NewDatabaseConnection()
 	database := db.NewDatabase(dbConnection)
 	service := services.NewService(database)
 	api := apis.NewApi(service)
 	router := gin.Default()
 	setUpRouter(router, api)
-	router.Run(port)
+	router.Run(ip)
 }
 
 func init() {
@@ -39,6 +39,11 @@ func setUpRouter(router *gin.Engine, api *apis.Api) {
 		{
 			device.POST("register", api.RegisterDevice)
 			device.GET("get/:id", api.GetDevice)
+		}
+		statistics := allRoutes.Group("statistics")
+		{
+			statistics.POST("/", api.InsertStatistic)
+			statistics.GET("/device/:id/date/from/:from/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
 		}
 	}
 
