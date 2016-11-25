@@ -9,7 +9,7 @@ import (
 	"github.com/knopt/iot/backend/error"
 )
 
-// GetStatisticsByDeviceDataType by given data
+// GetStatisticsByDeviceDataType by given requests parameters
 func (api *Api) GetStatisticsByDeviceDataType(context *gin.Context) {
 	deviceID := context.Param("id")
 	dateFrom := context.Param("from")
@@ -25,7 +25,7 @@ func (api *Api) GetStatisticsByDeviceDataType(context *gin.Context) {
 	context.IndentedJSON(http.StatusOK, responseStatistics)
 }
 
-//InsertStatistic from api
+//InsertStatistic from api statistic form
 func (api *Api) InsertStatistic(context *gin.Context) {
 
 	var statisticForm model.StatisticForm

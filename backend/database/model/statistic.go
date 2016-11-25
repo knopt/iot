@@ -6,7 +6,7 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-// Statistic model
+// Statistic database model
 type Statistic struct {
 	DeviceID    bson.ObjectId `bson:"device_id"`
 	Date        time.Time     `bson:"date"`

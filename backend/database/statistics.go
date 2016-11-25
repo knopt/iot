@@ -9,7 +9,7 @@ import (
 	"github.com/knopt/iot/backend/database/model"
 )
 
-// GetStatisticsDeviceFromToType by values
+// GetStatisticsDeviceFromToType by deviceId, dataFrom, dateTo and dataType
 func (database *Database) GetStatisticsDeviceFromToType(deviceID bson.ObjectId, dateFrom time.Time, dateTo time.Time, dataType string) ([]*model.Statistic, error) {
 	var allStatistics []*model.Statistic
 	fmt.Printf("GET STATS: %v %v %v %v\n", deviceID, dateFrom, dateTo, dataType)

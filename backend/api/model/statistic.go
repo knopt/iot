@@ -2,7 +2,7 @@ package model
 
 import "time"
 
-// StatisticForm model
+// StatisticForm model for API requests
 type StatisticForm struct {
 	Date        time.Time `json:"date" binding:"required"`
 	Value       float64   `json:"value" binding:"required"`
