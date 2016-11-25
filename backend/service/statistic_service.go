@@ -1,7 +1,6 @@
 package service
 
 import (
-	"errors"
 	"fmt"
 	"time"
 
@@ -48,7 +47,11 @@ func (service *Service) GetStatistics(deviceID string, dateFrom string, dateTo s
 		dbDateFrom = time.Time{}
 	}
 
-	bsonDeviceID, err := stringToBsonObjectID(deviceID)
+	if err = validateBsonObjectID(deviceID); err != nil {
+		return nil, err
+	}
+
+	bsonDeviceID := bson.ObjectIdHex(deviceID)
 	if err != nil {
 		return nil, err
 	}
@@ -63,21 +66,11 @@ func (service *Service) GetStatistics(deviceID string, dateFrom string, dateTo s
 	return apiStatistics, nil
 }
 
-func stringToBsonObjectID(id string) (bson.ObjectId, error) {
-	if len(id) != 24 {
-		return bson.NewObjectId(), errors.New("Wrong bson ID length")
-	} else if !bson.IsObjectIdHex(id) {
-		return bson.NewObjectId(), errors.New("Wrong format of deviceID")
-	}
-	return bson.ObjectIdHex(id), nil
-}
-
 func apiStatisticFormToDatabaseStatistic(statisticForm *apiModel.StatisticForm) (*databaseModel.Statistic, error) {
-	if len(statisticForm.DeviceID) != 24 {
-		return nil, errors.New("Wrong deviceID length")
-	} else if !bson.IsObjectIdHex(statisticForm.DeviceID) {
-		return nil, errors.New("Wrong format of deviceID")
+	if err := validateBsonObjectID(statisticForm.DeviceID); err != nil {
+		return nil, err
 	}
+
 	return &databaseModel.Statistic{
 		DeviceID:    bson.ObjectIdHex(statisticForm.DeviceID),
 		Value:       statisticForm.Value,

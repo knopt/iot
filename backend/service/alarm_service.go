@@ -1,8 +1,6 @@
 package service
 
 import (
-	"errors"
-
 	"gopkg.in/mgo.v2/bson"
 
 	apiModel "github.com/knopt/iot/backend/api/model"
@@ -11,6 +9,9 @@ import (
 
 // GetAlarm by id from database and return to API
 func (service *Service) GetAlarm(alarmID string) (*apiModel.AlarmForm, error) {
+	if err := validateBsonObjectID(alarmID); err != nil {
+		return nil, err
+	}
 	dbAlarm, err := service.db.GetAlarm(bson.ObjectIdHex(alarmID))
 	if err != nil {
 		return nil, err
@@ -33,10 +34,8 @@ func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, err
 }
 
 func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) (*databaseModel.Alarm, error) {
-	if len(alarmForm.DeviceID) != 24 {
-		return nil, errors.New("Wrong deviceID length")
-	} else if !bson.IsObjectIdHex(alarmForm.DeviceID) {
-		return nil, errors.New("Wrong format of deviceID")
+	if err := validateBsonObjectID(alarmForm.DeviceID); err != nil {
+		return nil, err
 	}
 	return &databaseModel.Alarm{
 		AlarmTime:    alarmForm.AlarmTime,

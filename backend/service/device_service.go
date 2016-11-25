@@ -9,6 +9,9 @@ import (
 
 // GetDevice by id from database and return to API
 func (service *Service) GetDevice(deviceID string) (*apiModel.DeviceForm, error) {
+	if err := validateBsonObjectID(deviceID); err != nil {
+		return nil, err
+	}
 	dbDevice, err := service.db.GetDevice(bson.ObjectIdHex(deviceID))
 	if err != nil {
 		return nil, err
