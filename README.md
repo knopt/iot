@@ -36,7 +36,10 @@ $ $GOPATH/bin/backend
 ```
 
 ## Frontend
-TBA
-
+```
+$ cd $GOPATH/src/github.com/knopt/iot/frontend
+$ npm install
+$ npm start
+```
 ## Physical device software
 TBA
