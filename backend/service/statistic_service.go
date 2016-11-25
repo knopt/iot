@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -14,7 +13,6 @@ import (
 // InsertStatistic from api to db
 func (service *Service) InsertStatistic(statisticForm *apiModel.StatisticForm) error {
 	statistic, err := apiStatisticFormToDatabaseStatistic(statisticForm)
-	fmt.Printf("service %v\n", statistic)
 	if err != nil {
 		return err
 	}
