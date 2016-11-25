@@ -28,5 +28,8 @@ func NewDatabaseConnection() *mgo.Database {
 
 // NewDatabase creates global Database object from database connection
 func NewDatabase(connection *mgo.Database) *Database {
+	connection.C("statistic").EnsureIndexKey("device_id", "type", "date")
+	connection.C("alarm").EnsureIndexKey("_id", "device_id", "alarm_time")
+	connection.C("device").EnsureIndexKey("_id")
 	return &Database{connection}
 }
