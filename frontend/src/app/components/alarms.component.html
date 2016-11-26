@@ -1,0 +1,13 @@
+<ul class="alarms">
+  <li *ngFor="let alarm of alarms"
+    [class.selected]="alarm === selectedAlarm"
+    (click)="onSelect(alarm)">
+    <span class="badge">{{alarm.id}}</span> {{alarm.description}}
+  </li>
+</ul>
+<div *ngIf="selectedAlarm">
+  <h2>
+    {{selectedAlarm.description | uppercase}} is my hero
+  </h2>
+  <!-- <button (click)="gotoDetail()">View Details</button> -->
+</div>
