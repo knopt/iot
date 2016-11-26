@@ -33,4 +33,4 @@ vendor/
 *.lock
 dist/
 node_modules/
-
+npm-debug.log
