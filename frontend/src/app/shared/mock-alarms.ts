@@ -1,20 +1,20 @@
-import { Alarm } from './alarm';
+import { Alarm } from './alarm.model';
 
 export const ALARMS: Alarm[] = [
     {
        id: "id1",
-       alarmTime: new Date(86400000),
-       createdAt: new Date(26400000),
+       alarm_time: new Date(86400000),
+       created_at: new Date(26400000),
        description: "description1",
-       deviceId: "deviceid1",
-       repeatWeekly: false,
+       device_id: "deviceid1",
+       repeat_weekly: false,
    },
    {
       id: "id2",
-      alarmTime: new Date(89400000),
-      createdAt: new Date(29400000),
+      alarm_time: new Date(89400000),
+      created_at: new Date(29400000),
       description: "description2",
-      deviceId: "deviceid2",
-      repeatWeekly: true,
+      device_id: "deviceid2",
+      repeat_weekly: true,
   }
 ];

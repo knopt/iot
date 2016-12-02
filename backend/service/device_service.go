@@ -19,6 +19,15 @@ func (service *Service) GetDevice(deviceID string) (*apiModel.DeviceForm, error)
 	return databaseDeviceToAPIDeviceForm(dbDevice), nil
 }
 
+// GetDevices get every device in db
+func (service *Service) GetDevices() ([]*apiModel.DeviceForm, error) {
+	dbDevices, err := service.db.GetDevices()
+	if err != nil {
+		return nil, err
+	}
+	return arrayOfDatabaseDevicesToArrayOfAPIDevices(dbDevices), nil
+}
+
 // RegisterDevice in database and return its ID to API
 func (service *Service) RegisterDevice(deviceForm *apiModel.DeviceForm) (*string, error) {
 	device := apiDeviceFormToDatabaseDevice(deviceForm)
@@ -29,6 +38,17 @@ func (service *Service) RegisterDevice(deviceForm *apiModel.DeviceForm) (*string
 
 	deviceHexBsonID := deviceBsonID.Hex()
 	return &deviceHexBsonID, nil
+}
+
+func arrayOfDatabaseDevicesToArrayOfAPIDevices(dbDevices []*databaseModel.Device) []*apiModel.DeviceForm {
+	apiDevices := make([]*apiModel.DeviceForm, 0)
+
+	for _, dbDevice := range dbDevices {
+		apiDevice := databaseDeviceToAPIDeviceForm(dbDevice)
+		apiDevices = append(apiDevices, apiDevice)
+	}
+
+	return apiDevices
 }
 
 func apiDeviceFormToDatabaseDevice(deviceForm *apiModel.DeviceForm) *databaseModel.Device {

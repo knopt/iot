@@ -18,6 +18,23 @@ func (database *Database) GetAlarm(alarmID bson.ObjectId) (*model.Alarm, error) 
 	return &alarm, nil
 }
 
+// GetAlarmsByDevice returns array of alarms
+func (database *Database) GetAlarmsByDevice(deviceID bson.ObjectId) ([]*model.Alarm, error) {
+	var alarms []*model.Alarm
+
+	err := database.db.C("alarm").Find(
+		bson.M{
+			"device_id": deviceID,
+		},
+	).All(&alarms)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return alarms, nil
+}
+
 // InsertAlarm into database
 func (database *Database) InsertAlarm(alarm *model.Alarm) (*bson.ObjectId, error) {
 	alarm.ID = bson.NewObjectId()

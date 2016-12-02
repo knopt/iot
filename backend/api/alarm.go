@@ -41,6 +41,19 @@ func (api *Api) GetAlarm(context *gin.Context) {
 	context.IndentedJSON(http.StatusOK, responseAlarm)
 }
 
+// GetAlarmsByDevice for given device id
+func (api *Api) GetAlarmsByDevice(context *gin.Context) {
+	deviceID := context.Param("device")
+
+	responseAlarms, err := api.Service.GetAlarmsByDevice(deviceID)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
+	context.IndentedJSON(http.StatusOK, responseAlarms)
+}
+
 // DeleteAlarm by given id
 func (api *Api) DeleteAlarm(context *gin.Context) {
 	fmt.Printf("DeleteAlarm api call. To pe implemented\n")

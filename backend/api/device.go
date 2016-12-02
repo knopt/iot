@@ -21,6 +21,16 @@ func (api *Api) GetDevice(context *gin.Context) {
 	context.IndentedJSON(http.StatusOK, responseDevice)
 }
 
+// GetDevices from db and convert them to api forms
+func (api *Api) GetDevices(context *gin.Context) {
+	responseDevices, err := api.Service.GetDevices()
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+	}
+
+	context.IndentedJSON(http.StatusOK, responseDevices)
+}
+
 // RegisterDevice in database and return its ID
 func (api *Api) RegisterDevice(context *gin.Context) {
 	var deviceForm model.DeviceForm
