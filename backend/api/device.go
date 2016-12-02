@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"gopkg.in/gin-gonic/gin.v1"
@@ -15,6 +16,7 @@ func (api *Api) GetDevice(context *gin.Context) {
 
 	responseDevice, err := api.Service.GetDevice(id)
 	if err != nil {
+		fmt.Printf("error in api")
 		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
 	}
 

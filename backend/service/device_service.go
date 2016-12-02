@@ -1,6 +1,8 @@
 package service
 
 import (
+	"fmt"
+
 	"gopkg.in/mgo.v2/bson"
 
 	apiModel "github.com/knopt/iot/backend/api/model"
@@ -23,6 +25,7 @@ func (service *Service) GetDevice(deviceID string) (*apiModel.DeviceForm, error)
 func (service *Service) GetDevices() ([]*apiModel.DeviceForm, error) {
 	dbDevices, err := service.db.GetDevices()
 	if err != nil {
+		fmt.Printf("error in getdevices")
 		return nil, err
 	}
 	return arrayOfDatabaseDevicesToArrayOfAPIDevices(dbDevices), nil

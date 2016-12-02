@@ -47,7 +47,7 @@ func setUpRouter(router *gin.Engine, api *apis.Api, corsConfig *cors.Config) {
 		{
 			device.POST("register", api.RegisterDevice)
 			device.GET("get/id/:id", api.GetDevice)
-			device.GET("get/all", api.GetDevice)
+			device.GET("get/all", api.GetDevices)
 		}
 		statistics := allRoutes.Group("statistics")
 		{

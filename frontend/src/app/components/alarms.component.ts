@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { Alarm } from '../shared/alarm.model';
 import { AlarmService } from '../shared/alarm.service';
@@ -16,24 +16,22 @@ export class AlarmsComponent implements OnInit {
     title = 'Alarms';
     alarms: Alarm[];
     selectedAlarm: Alarm;
-    httpAlarm: Alarm;
+
+    @Input()
+    deviceID: string
 
     constructor(private alarmService: AlarmService,
-                private router: Router
+                private router: Router,
+                private route: ActivatedRoute,
     ) {}
 
     getAlarms(): void {
-        this.alarmService.getAlarms().then(alarms => this.alarms = alarms);
-    }
-    getHttpAlarm(): void {
-        console.log("get alarm!!!");
-        this.alarmService.getAlarmHttp().then(alarm => {this.httpAlarm = alarm;
-            console.log(alarm);
-        });
+        this.alarmService.getAlarms(this.deviceID).then(alarms => this.alarms = alarms);
     }
     ngOnInit(): void {
-        this.getHttpAlarm();
-        this.getAlarms();
+        this.route.params
+            .switchMap((params: Params) => this.deviceID = params['deviceID'])
+            .subscribe(() => this.getAlarms())
     }
     onSelect(alarm: Alarm): void {
         this.selectedAlarm = alarm
