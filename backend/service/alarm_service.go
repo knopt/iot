@@ -19,6 +19,18 @@ func (service *Service) GetAlarm(alarmID string) (*apiModel.AlarmForm, error) {
 	return databaseAlarmToAPIAlarmForm(dbAlarm), nil
 }
 
+// GetAlarmsByDevice get alarms by device
+func (service *Service) GetAlarmsByDevice(deviceID string) ([]*apiModel.AlarmForm, error) {
+	if err := validateBsonObjectID(deviceID); err != nil {
+		return nil, err
+	}
+	dbAlarms, err := service.db.GetAlarmsByDevice(bson.ObjectIdHex(deviceID))
+	if err != nil {
+		return nil, err
+	}
+	return arrayOfDatabaseAlarmsToArrayOfAPIAlarms(dbAlarms), nil
+}
+
 // CreateAlarm in database and return its ID to API
 func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, error) {
 	alarm, err := apiAlarmFormToDatabaseAlarm(alarmForm)
@@ -31,6 +43,17 @@ func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, err
 	}
 	alarmHexBsonID := alarmBsonID.Hex()
 	return &alarmHexBsonID, nil
+}
+
+func arrayOfDatabaseAlarmsToArrayOfAPIAlarms(dbAlarms []*databaseModel.Alarm) []*apiModel.AlarmForm {
+	apiAlarms := make([]*apiModel.AlarmForm, 0)
+
+	for _, dbAlarm := range dbAlarms {
+		apiAlarm := databaseAlarmToAPIAlarmForm(dbAlarm)
+		apiAlarms = append(apiAlarms, apiAlarm)
+	}
+
+	return apiAlarms
 }
 
 func apiAlarmFormToDatabaseAlarm(alarmForm *apiModel.AlarmForm) (*databaseModel.Alarm, error) {

@@ -1,6 +1,7 @@
 package database
 
 import (
+	"fmt"
 	"time"
 
 	"gopkg.in/mgo.v2/bson"
@@ -16,6 +17,21 @@ func (database *Database) GetDevice(deviceID bson.ObjectId) (*model.Device, erro
 		return nil, err
 	}
 	return &device, nil
+}
+
+// GetDevices get all devices from db
+func (database *Database) GetDevices() ([]*model.Device, error) {
+	var devices []*model.Device
+
+	err := database.db.C("device").Find(nil).All(&devices)
+	if err != nil {
+		fmt.Printf("error in database\n")
+		return nil, err
+	}
+
+	fmt.Printf("%v\n", devices)
+
+	return devices, nil
 }
 
 // InsertDevice into database

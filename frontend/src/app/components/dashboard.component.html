@@ -1,0 +1,25 @@
+<h3>Smart Alarm - Dashboard</h3>
+<div class="container-fluid">
+    <div class="col-sm-4">
+        <devices (onDeviceSelected)="onDeviceSelected($event)"></devices>
+    </div>
+    <div class="col-sm-8">
+        <div class="row">
+            <div class="container">
+                <div class="col-md-6 button">
+                    <div [class.selected]="selectedTab === 'alarms'" (click)="onSelect('alarms')">Alarms</div>
+                </div>
+                <div class="col-md-6 button">
+                    <div [class.selected]="selectedTab === 'stats'" (click)="onSelect('stats')">Statisctics</div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <h3 *ngIf="!selectedDevice"> Select device first!</h3>
+                <div *ngIf="selectedTab === 'alarms'"><alarms [deviceId]="getSelectedDeviceId()"></alarms></div>
+                <div *ngIf="selectedTab === 'stats'"><stats [deviceId]="getSelectedDeviceId()"></stats></div>
+            </div>
+        </div>
+    </div>
+</div>

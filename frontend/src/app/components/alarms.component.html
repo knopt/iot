@@ -1,0 +1,29 @@
+<h3>Alarms component! DeviceID: {{deviceId}}</h3>
+<div *ngIf="alarms">
+    <ul class="alarms">
+      <li *ngFor="let alarm of alarms"
+        [class.selected]="alarm === selectedAlarm"
+        (click)="onSelect(alarm)">
+        <span class="badge">{{alarm.id}}</span> {{alarm.created_at | date: 'HH:mm dd.MM.yyyy'}}
+      </li>
+    </ul>
+    <div *ngIf="selectedAlarm">
+        <h3>
+            Alarm description: {{selectedAlarm.description}}
+        </h3>
+    </div>
+</div>
+<div *ngIf="!alarms && deviceId">
+    <h2>
+        Loading....
+        No alarms yet
+    </h2>
+</div>
+<div *ngIf="!alarms && !deviceId">
+    <h2>
+        No device given!
+    </h2>
+</div>
+<div>
+    Add alarm and delete alarms to be added!
+</div>
