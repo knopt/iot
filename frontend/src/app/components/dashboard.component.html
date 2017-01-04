@@ -18,6 +18,7 @@
             <div class="col-md-12">
                 <h3 *ngIf="!selectedDevice"> Select device first!</h3>
                 <div *ngIf="selectedTab === 'alarms'"><alarms [deviceId]="getSelectedDeviceId()"></alarms></div>
+                <div *ngIf="selectedTab === 'stats'"><stats [deviceId]="getSelectedDeviceId()"></stats></div>
             </div>
         </div>
     </div>
