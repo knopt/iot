@@ -4,7 +4,6 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Alarm } from './alarm.model';
-import { ALARMS } from './mock-alarms';
 
 @Injectable()
 export class AlarmService {
