@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Device } from '../shared/device.model';
@@ -17,6 +17,8 @@ export class DevicesComponent implements OnInit {
     devices: Device[];
     selectedDevice: Device;
 
+    @Output() onDeviceSelected = new EventEmitter<Device>();
+
     constructor(private deviceService: DeviceService,
                 private router: Router
     ) {}
@@ -28,7 +30,8 @@ export class DevicesComponent implements OnInit {
         this.getDevices();
     }
     onSelect(device: Device): void {
-        this.selectedDevice = device
+        this.selectedDevice = device;
+        this.onDeviceSelected.emit(device);
     }
     gotoAlarms(): void {
       this.router.navigate(['/alarms', this.selectedDevice.id]);

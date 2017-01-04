@@ -5,6 +5,7 @@ import { DashboardComponent }   from './components/dashboard.component';
 import { DevicesComponent }     from './components/devices.component';
 import { HeroDetailComponent }  from './components/hero-detail.component';
 import { HeroesComponent }      from './components/heroes.component';
+import { StatsComponent }       from './components/stats.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
@@ -13,6 +14,7 @@ const routes: Routes = [
   { path: 'heroes',             component: HeroesComponent },
   { path: 'alarms/:deviceID',   component: AlarmsComponent },
   { path: 'devices',            component: DevicesComponent },
+  { path: 'stats/:deviceID',    component: StatsComponent },
 ];
 
 @NgModule({

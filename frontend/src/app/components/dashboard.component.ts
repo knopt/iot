@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { Hero } from '../shared/hero';
-import { HeroService } from '../shared/hero.service';
+import { Device } from '../shared/device.model';
 
 @Component({
   selector: 'my-dashboard',
@@ -10,9 +10,26 @@ import { HeroService } from '../shared/hero.service';
 })
 
 export class DashboardComponent {
+    selectedTab: string;
+    selectedDevice: Device;
 
-    constructor(private heroService: HeroService) { }
+    constructor(private router: Router,
+                private route: ActivatedRoute
+    ) {}
 
     ngOnInit(): void {
+        this.selectedTab = "alarms";
+    }
+    onSelect(tab: string): void {
+        this.selectedTab = tab;
+    }
+    onDeviceSelected(device: Device) {
+        this.selectedDevice = device;
+    }
+    getSelectedDeviceId() {
+        if (this.selectedDevice) {
+            return this.selectedDevice.id;
+        }
+        return "";
     }
 }

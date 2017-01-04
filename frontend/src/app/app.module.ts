@@ -9,6 +9,7 @@ import { DevicesComponent }     from './components/devices.component';
 import { HeroDetailComponent }  from './components/hero-detail.component';
 import { HeroesComponent }      from './components/heroes.component';
 import { AlarmsComponent }      from './components/alarms.component';
+import { StatsComponent }       from './components/stats.component';
 import { AlarmService }         from './shared/alarm.service';
 import { DeviceService }        from './shared/device.service';
 import { HeroService }          from './shared/hero.service';
@@ -28,6 +29,7 @@ import { AppRoutingModule }     from './app-routing.module';
     HeroesComponent,
     AlarmsComponent,
     DevicesComponent,
+    StatsComponent,
   ],
   providers: [ HeroService, AlarmService, DeviceService ],
   bootstrap: [ AppComponent ]

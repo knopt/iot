@@ -1,3 +1,4 @@
+<h3>Alarms component! DeviceID: {{deviceId}}</h3>
 <div *ngIf="alarms">
     <ul class="alarms">
       <li *ngFor="let alarm of alarms"
@@ -7,14 +8,22 @@
       </li>
     </ul>
     <div *ngIf="selectedAlarm">
-      <h2>
-        {{selectedAlarm.description | uppercase}} is my hero
-      </h2>
-      <!-- <button (click)="gotoDetail()">View Details</button> -->
+        <h3>
+            Alarm description: {{selectedAlarm.description}}
+        </h3>
     </div>
 </div>
-<div *ngIf="!alarms">
+<div *ngIf="!alarms && deviceId">
     <h2>
         Loading....
+        No alarms yet
     </h2>
+</div>
+<div *ngIf="!alarms && !deviceId">
+    <h2>
+        No device given!
+    </h2>
+</div>
+<div>
+    Add alarm and delete alarms to be added!
 </div>

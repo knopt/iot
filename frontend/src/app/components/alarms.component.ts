@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChange, Input } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { Alarm } from '../shared/alarm.model';
@@ -12,13 +12,12 @@ import { AlarmService } from '../shared/alarm.service';
   providers: [AlarmService]
 })
 
-export class AlarmsComponent implements OnInit {
+export class AlarmsComponent implements OnInit, OnChanges {
     title = 'Alarms';
     alarms: Alarm[];
     selectedAlarm: Alarm;
 
-    @Input()
-    deviceID: string
+    @Input() deviceId: string;
 
     constructor(private alarmService: AlarmService,
                 private router: Router,
@@ -26,14 +25,25 @@ export class AlarmsComponent implements OnInit {
     ) {}
 
     getAlarms(): void {
-        this.alarmService.getAlarms(this.deviceID).then(alarms => this.alarms = alarms);
+        if (this.deviceId) {
+            this.alarmService.getAlarms(this.deviceId).then(alarms => this.alarms = alarms).catch(() => console.log("catch"));
+        }
     }
+
     ngOnInit(): void {
         this.route.params
-            .switchMap((params: Params) => this.deviceID = params['deviceID'])
-            .subscribe(() => this.getAlarms())
+            .switchMap((params: Params) =>  this.deviceId = params['deviceId']);
+        this.route.params
+            .subscribe(() => this.getAlarms());
+    }
+
+    ngOnChanges(): void {
+        this.route.params
+            .switchMap((params: Params) =>  this.deviceId = params['deviceId']);
+        this.route.params
+            .subscribe(() => this.getAlarms());
     }
     onSelect(alarm: Alarm): void {
-        this.selectedAlarm = alarm
+        this.selectedAlarm = alarm;
     }
 }

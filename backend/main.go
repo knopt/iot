@@ -3,5 +3,5 @@ package main
 import "github.com/knopt/iot/backend/server"
 
 func main() {
-	server.StartServer(":8080")
+	server.StartServer("localhost:8080")
 }
