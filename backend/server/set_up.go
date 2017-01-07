@@ -52,9 +52,10 @@ func setUpRouter(router *gin.Engine, api *apis.Api, corsConfig *cors.Config) {
 		statistics := allRoutes.Group("statistics")
 		{
 			statistics.POST("/", api.InsertStatistic)
-			statistics.GET("/device/:id/date/from/:from/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
-			statistics.GET("/device/:id/date/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
-			statistics.GET("/device/:id/date/from/:from/type/:type", api.GetStatisticsByDeviceDataType)
+			statistics.GET("/get/device/:id/date/from/:from/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
+			statistics.GET("/get/device/:id/date/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
+			statistics.GET("/get/device/:id/date/from/:from/type/:type", api.GetStatisticsByDeviceDataType)
+			statistics.GET("/get/types/device/:id", api.GetStatisticsTypes)
 		}
 	}
 

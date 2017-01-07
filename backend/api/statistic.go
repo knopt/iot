@@ -27,7 +27,6 @@ func (api *Api) GetStatisticsByDeviceDataType(context *gin.Context) {
 
 //InsertStatistic from api statistic form
 func (api *Api) InsertStatistic(context *gin.Context) {
-
 	var statisticForm model.StatisticForm
 
 	if err := context.BindJSON(&statisticForm); err != nil {
@@ -42,4 +41,17 @@ func (api *Api) InsertStatistic(context *gin.Context) {
 	}
 
 	context.String(http.StatusOK, "Success")
+}
+
+//GetStatisticsTypes by deviceID
+func (api *Api) GetStatisticsTypes(context *gin.Context) {
+	deviceID := context.Param("id")
+
+	responseTypes, err := api.Service.GetStatisticsTypes(deviceID)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
+	context.IndentedJSON(http.StatusOK, responseTypes)
 }

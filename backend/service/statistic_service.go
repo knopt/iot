@@ -23,6 +23,17 @@ func (service *Service) InsertStatistic(statisticForm *apiModel.StatisticForm) e
 	return nil
 }
 
+// GetStatisticsTypes by deviceID
+func (service *Service) GetStatisticsTypes(deviceID string) ([]string, error) {
+	if err := validateBsonObjectID(deviceID); err != nil {
+		return nil, err
+	}
+
+	bsonDeviceID := bson.ObjectIdHex(deviceID)
+
+	return service.db.GetStatisticsTypes(bsonDeviceID)
+}
+
 // GetStatistics by id from database and return to API
 func (service *Service) GetStatistics(deviceID string, dateFrom string, dateTo string, dataType string) ([]*apiModel.StatisticForm, error) {
 	var err error
