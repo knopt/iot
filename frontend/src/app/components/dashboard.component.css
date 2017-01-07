@@ -11,7 +11,7 @@
     display: block;
     height: 50px;
     width: 300px;
-    background: #AEEEEE;
+    background-color: #EEE;
     border: 1px solid white;
     border-radius: 5px;
 
@@ -19,7 +19,6 @@
     text-align: center;
     padding: 5px;
     font: bold 2em "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
-
 }
 [class*='col-'] {
   float: left;

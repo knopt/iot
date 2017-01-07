@@ -7,9 +7,10 @@ import { AppComponent }         from './app.component';
 import { DashboardComponent }   from './components/dashboard.component';
 import { DevicesComponent }     from './components/devices.component';
 import { AlarmsComponent }      from './components/alarms.component';
-import { StatsComponent }       from './components/stats.component';
+import { StatisticsComponent }  from './components/statistics.component';
 import { AlarmService }         from './shared/alarm.service';
 import { DeviceService }        from './shared/device.service';
+import { StatisticService }     from './shared/statistic.service';
 import { AppRoutingModule }     from './app-routing.module';
 
 @NgModule({
@@ -24,9 +25,9 @@ import { AppRoutingModule }     from './app-routing.module';
     DashboardComponent,
     AlarmsComponent,
     DevicesComponent,
-    StatsComponent,
+    StatisticsComponent,
   ],
-  providers: [ AlarmService, DeviceService ],
+  providers: [ AlarmService, DeviceService, StatisticService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

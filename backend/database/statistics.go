@@ -28,6 +28,23 @@ func (database *Database) GetStatisticsDeviceFromToType(deviceID bson.ObjectId, 
 	return allStatistics, nil
 }
 
+// GetStatisticsTypes by deviceID
+func (database *Database) GetStatisticsTypes(deviceID bson.ObjectId) ([]string, error) {
+	var types []string
+
+	err := database.db.C("statistic").Find(
+		bson.M{
+			"device_id": deviceID,
+		},
+	).Distinct("type", &types)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return types, nil
+}
+
 // InsertStatistic into database
 func (database *Database) InsertStatistic(statistic *model.Statistic) error {
 	if err := database.db.C("statistic").Insert(statistic); err != nil {

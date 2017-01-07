@@ -1,4 +1,6 @@
-<h3>Alarms component! DeviceID: {{deviceId}}</h3>
+<div *ngIf="deviceId">
+    <h3>Alarms component! DeviceID: {{deviceId}}</h3>
+</div>
 <div *ngIf="alarms">
     <ul class="alarms">
       <li *ngFor="let alarm of alarms"
