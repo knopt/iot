@@ -1,29 +1,16 @@
 <div *ngIf="deviceId">
     <h3>Statistics component! DeviceID: {{deviceId}}</h3>
 </div>
-<div *ngIf="statistics">
-    <ul class="statistics">
-      <li *ngFor="let statistic of statistics"
-        [class.selected]="statistic === selectedStatistic"
-        (click)="onSelectStatistic(statistic)">
-        <span class="badge"> Date: </span> {{statistic.date | date: 'HH:mm dd.MM.yyyy'}} <span class="badge"> Value: </span> {{ statistic.value }}
-      </li>
-    </ul>
-    <div *ngIf="selectedStatistic">
-        <h3>
-            Statistic description: {{selectedStatistic.description}}
-        </h3>
-    </div>
-</div>
 <div *ngIf="types">
     <ul class="types">
         <li *ngFor="let type of types"
-            (click)="onSelectType(type)">
+        (click)="onSelectType(type)">
             <span class="badge">Type:</span>{{type | uppercase}}
         </li>
     </ul>
-<div>
-
+</div>
+<div *ngIf="statistics">
+    <chart [chartData]="getChartTable()"></chart>
 </div>
 <div *ngIf="!statistics && !deviceId">
     <h2>
