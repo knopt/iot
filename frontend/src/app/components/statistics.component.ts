@@ -4,7 +4,6 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { Statistic } from '../shared/statistic.model';
 import { StatisticService } from '../shared/statistic.service';
 
-
 @Component({
   selector: 'statistics',
   templateUrl: 'statistics.component.html',
@@ -13,6 +12,7 @@ import { StatisticService } from '../shared/statistic.service';
 })
 
 export class StatisticsComponent implements OnInit, OnChanges {
+
     title = 'Statistics';
     statistics: Statistic[];
     types: string[];
@@ -43,6 +43,21 @@ export class StatisticsComponent implements OnInit, OnChanges {
         }
     }
 
+    getChartTable(): any[] {
+        var result: any[] = [];
+        result.push(['Date', 'Value']);
+
+        if (!this.statistics) {
+            return result;
+        }
+
+        for (let stat of this.statistics) {
+            result.push([stat.date, stat.value]);
+        }
+
+        return result;
+    }
+
     ngOnInit(): void {
         this.route.params
             .switchMap((params: Params) =>  this.deviceId = params['deviceId']);
@@ -55,7 +70,7 @@ export class StatisticsComponent implements OnInit, OnChanges {
     onSelectStatistic(statistic: Statistic): void {
         this.selectedStatistic = statistic;
     }
-    
+
     onSelectType(type: string): void {
         this.selectedType = type;
         this.getStatistics();
