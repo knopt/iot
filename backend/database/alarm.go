@@ -18,6 +18,23 @@ func (database *Database) GetAlarm(alarmID bson.ObjectId) (*model.Alarm, error) 
 	return &alarm, nil
 }
 
+// GetNearestAlarm get first alarm to ring
+func (database *Database) GetNearestAlarm(deviceID bson.ObjectId, date time.Time) (*model.Alarm, error) {
+	var alarms []*model.Alarm
+	err := database.db.C("alarm").Find(
+		bson.M{
+			"device_id": deviceID,
+			"alarm_time": bson.M{
+				"$gte": date,
+			},
+		},
+	).Sort("alarm_time").All(&alarms)
+	if err != nil {
+		return nil, err
+	}
+	return alarms[0], nil
+}
+
 // GetAlarmsByDevice returns array of alarms
 func (database *Database) GetAlarmsByDevice(deviceID bson.ObjectId) ([]*model.Alarm, error) {
 	var alarms []*model.Alarm

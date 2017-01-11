@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnChanges, OnInit, Input } from '@angular/core';
 
 declare var google:any;
 
@@ -10,7 +10,7 @@ declare var google:any;
   </div>
 `
 })
-export class GoogleChartComponent implements OnInit {
+export class GoogleChartComponent implements OnInit, OnChanges {
   private static googleLoaded:any;
 
   private options: any;
@@ -33,6 +33,10 @@ export class GoogleChartComponent implements OnInit {
       google.charts.load('current',  {packages: ['corechart', 'bar']});
     }
     google.charts.setOnLoadCallback(() => this.drawGraph());
+  }
+
+  ngOnChanges(): void {
+      console.log("on changes chart");
   }
 
   drawGraph(){
