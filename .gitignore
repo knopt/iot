@@ -34,3 +34,7 @@ vendor/
 dist/
 node_modules/
 npm-debug.log
+
+# compiled js files
+frontend/src/*.js
+frontend/src/*.js.map
