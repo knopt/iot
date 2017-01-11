@@ -54,6 +54,34 @@ func (api *Api) GetAlarmsByDevice(context *gin.Context) {
 	context.IndentedJSON(http.StatusOK, responseAlarms)
 }
 
+// GetNearestAlarmByDevice get json with nearest alarm
+func (api *Api) GetNearestAlarmByDevice(context *gin.Context) {
+	deviceID := context.Param("id")
+
+	responseAlarm, err := api.Service.GetNearestAlarmByDevice(deviceID)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
+	context.IndentedJSON(http.StatusOK, responseAlarm)
+}
+
+// GetNearestAlarmByDeviceString get string with nearest alarm
+func (api *Api) GetNearestAlarmByDeviceString(context *gin.Context) {
+	deviceID := context.Param("id")
+
+	responseAlarm, err := api.Service.GetNearestAlarmByDevice(deviceID)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
+	resultString := fmt.Sprintf("%v", responseAlarm.AlarmTime)
+
+	context.IndentedJSON(http.StatusOK, resultString)
+}
+
 // DeleteAlarm by given id
 func (api *Api) DeleteAlarm(context *gin.Context) {
 	fmt.Printf("DeleteAlarm api call. To pe implemented\n")

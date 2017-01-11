@@ -1,6 +1,8 @@
 package service
 
 import (
+	"time"
+
 	"gopkg.in/mgo.v2/bson"
 
 	apiModel "github.com/knopt/iot/backend/api/model"
@@ -29,6 +31,20 @@ func (service *Service) GetAlarmsByDevice(deviceID string) ([]*apiModel.AlarmFor
 		return nil, err
 	}
 	return arrayOfDatabaseAlarmsToArrayOfAPIAlarms(dbAlarms), nil
+}
+
+// GetNearestAlarmByDevice get first alarm to ring
+func (service *Service) GetNearestAlarmByDevice(deviceID string) (*apiModel.AlarmForm, error) {
+	if err := validateBsonObjectID(deviceID); err != nil {
+		return nil, err
+	}
+	dbAlarm, err := service.db.GetNearestAlarm(bson.ObjectIdHex(deviceID), time.Now())
+	if err != nil {
+		return nil, err
+	}
+	apiAlarm := databaseAlarmToAPIAlarmForm(dbAlarm)
+
+	return apiAlarm, nil
 }
 
 // CreateAlarm in database and return its ID to API
