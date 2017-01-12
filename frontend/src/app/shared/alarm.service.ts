@@ -8,12 +8,12 @@ import { Alarm } from './alarm.model';
 @Injectable()
 export class AlarmService {
     private getAlarmUrl = 'http://localhost:8080/alarm/get/id/5831fa07d0d41f1364a5eeb0'
-    private getAlarmsUrl = 'http://localhost:8080/alarm/get/device/58362c0bd0d41f4f91240f29/all'
+    private getAlarmsUrl = 'http://localhost:8080/alarm/get/id/58362c0bd0d41f4f91240f29/all'
 
     constructor(private http: Http) { }
 
     getAlarms(deviceID: string): Promise<Alarm[]> {
-        return this.http.get('http://localhost:8080/alarm/get/device/' + deviceID + '/all')
+        return this.http.get('http://localhost:8080/alarm/get/id/' + deviceID + '/all')
            .toPromise()
            .then(response => response.json() as Alarm[])
            .catch(this.handleError);
