@@ -43,7 +43,7 @@ func (api *Api) GetAlarm(context *gin.Context) {
 
 // GetAlarmsByDevice for given device id
 func (api *Api) GetAlarmsByDevice(context *gin.Context) {
-	deviceID := context.Param("device")
+	deviceID := context.Param("id")
 
 	responseAlarms, err := api.Service.GetAlarmsByDevice(deviceID)
 	if err != nil {
@@ -77,7 +77,7 @@ func (api *Api) GetNearestAlarmByDeviceString(context *gin.Context) {
 		return
 	}
 
-	resultString := fmt.Sprintf("%v", responseAlarm.AlarmTime)
+	resultString := fmt.Sprintf("*%v*", responseAlarm.AlarmTime.Unix())
 
 	context.IndentedJSON(http.StatusOK, resultString)
 }
