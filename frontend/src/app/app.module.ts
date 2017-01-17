@@ -7,6 +7,7 @@ import { AppComponent }         from './app.component';
 import { DashboardComponent }   from './components/dashboard.component';
 import { DevicesComponent }     from './components/devices.component';
 import { AlarmsComponent }      from './components/alarms.component';
+import { AlarmFormComponent }   from './components/alarm-form.component';
 import { GoogleChartComponent } from './components/googleChart.component';
 import { StatisticsComponent }  from './components/statistics.component';
 import { AlarmService }         from './shared/alarm.service';
@@ -22,6 +23,7 @@ import { AppRoutingModule }     from './app-routing.module';
     AppRoutingModule
   ],
   declarations: [
+    AlarmFormComponent,
     AlarmsComponent,
     AppComponent,
     DashboardComponent,

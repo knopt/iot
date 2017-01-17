@@ -2,19 +2,28 @@
     <h3>Alarms component! DeviceID: {{deviceId}}</h3>
 </div>
 <div *ngIf="alarms">
-    <ul class="alarms">
-      <li *ngFor="let alarm of alarms"
-        [class.selected]="alarm === selectedAlarm"
-        (click)="onSelect(alarm)">
-        <span class="badge">{{alarm.id}}</span> {{alarm.created_at | date: 'HH:mm dd.MM.yyyy'}}
-      </li>
-    </ul>
-    <div *ngIf="selectedAlarm">
-        <h3>
-            Alarm description: {{selectedAlarm.description}}
-        </h3>
+    <div>
+        <div>
+            <ul class="alarms">
+              <li *ngFor="let alarm of alarms"
+                [class.selected]="alarm === selectedAlarm"
+                (click)="onSelect(alarm)">
+                <span class="text">{{alarm.created_at | date: 'HH:mm dd.MM.yyyy'}}</span>
+              </li>
+
+            </ul>
+            <div *ngIf="selectedAlarm">
+                <span class="text">
+                    Alarm description: {{selectedAlarm.description}}
+                </span>
+            </div>
+        </div>
+        <div *ngIf="deviceId" >
+            <alarm-form [setDeviceId]="deviceId"></alarm-form>
+        </div>
     </div>
 </div>
+
 <div *ngIf="!alarms && deviceId">
     <h2>
         Loading....
@@ -25,7 +34,4 @@
     <h2>
         No device given!
     </h2>
-</div>
-<div>
-    Add alarm and delete alarms to be added!
 </div>

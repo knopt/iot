@@ -4,10 +4,11 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Device } from './device.model';
+import { Config } from '../app.config';
 
 @Injectable()
 export class DeviceService {
-    private getDevicesUrl = 'http://localhost:8080/device/get/all'
+    private getDevicesUrl = Config.domainName + '/device/get/all'
 
     constructor(private http: Http) { }
 

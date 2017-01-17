@@ -10,7 +10,7 @@
     </ul>
 </div>
 <div *ngIf="statistics">
-    <chart [chartData]="getChartTable()"></chart>
+    <chart [statsData]="getChartTable()" [statsType]="selectedType"></chart>
 </div>
 <div *ngIf="!statistics && !deviceId">
     <h2>
