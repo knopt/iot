@@ -5,19 +5,37 @@ declare var google:any;
 @Component({
   selector: 'chart',
   template: `
-  <div class="four wide column center aligned">
-      <div id="chart_divEvolution" style="width: 900px; height: 500px;"></div>
+  <div>
+      <div (click)="onRefresh()">
+          <h3> Refresh! </h3>
+      </div>
+      <div class="four wide column center aligned">
+          <div id="chart_divEvolution" style="width: 900px; height: 500px;"></div>
+      </div>
   </div>
 `
 })
-export class GoogleChartComponent implements OnInit, OnChanges {
+export class GoogleChartComponent implements OnInit {
   private static googleLoaded:any;
 
   private options: any;
   private chart: any;
   private data: any;
+  private chartData: any;
+  private chartType: string;
 
-  @Input() chartData: any;
+  @Input('statsData')
+  set statsData(data: any) {
+      this.chartData = data;
+      setTimeout(function() {
+          this.drawGraph();
+      }, 3000);
+  }
+
+  @Input('statsType')
+  set statsType(type: string) {
+      this.chartType = type;
+  }
 
   constructor(){
       console.log("Here is GoogleChartComponent")
@@ -35,16 +53,17 @@ export class GoogleChartComponent implements OnInit, OnChanges {
     google.charts.setOnLoadCallback(() => this.drawGraph());
   }
 
-  ngOnChanges(): void {
-      console.log("on changes chart");
+  onRefresh() {
+      this.drawGraph();
   }
 
   drawGraph(){
     console.log("LineGraph Evolution...");
+
     this.data = this.createDataTable(this.chartData);
 
     this.options = {
-      title: 'Statistics',
+      title: `${this.chartType}`,
       curveType: 'function',
     };
 
