@@ -17,7 +17,7 @@ Clone this repository
   
 Start mongodb
 ```
-$ sudo service start mongod
+$ sudo service mongod start
 ```
 Create database `iot`
 ```
