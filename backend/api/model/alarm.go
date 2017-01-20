@@ -9,6 +9,6 @@ type AlarmForm struct {
 	CreatedAt    time.Time    `json:"created_at" binding:"required"`
 	Description  string       `json:"description"`
 	DeviceID     string       `json:"device_id" binding:"required"`
-	RepeatWeekly bool         `json:"repeat_weekly" binding:"exists"`
-	Weekday      time.Weekday `json:"weekday" binding:"required"`
+	RepeatWeekly bool         `json:"repeat_weekly"`
+	Weekday      time.Weekday `json:"weekday"`
 }
