@@ -61,6 +61,26 @@ func (service *Service) CreateAlarm(alarmForm *apiModel.AlarmForm) (*string, err
 	return &alarmHexBsonID, nil
 }
 
+// DeleteAlarm by deviceID
+func (service *Service) DeleteAlarm(alarmID string) error {
+	if err := validateBsonObjectID(alarmID); err != nil {
+		return err
+	}
+	err := service.db.DeleteAlarm(bson.ObjectIdHex(alarmID))
+
+	return err
+}
+
+// DeleteNearestAlarm by deviceID
+func (service *Service) DeleteNearestAlarm(deviceID string) error {
+	if err := validateBsonObjectID(deviceID); err != nil {
+		return err
+	}
+	err := service.db.DeleteNearestAlarm(bson.ObjectIdHex(deviceID))
+
+	return err
+}
+
 func arrayOfDatabaseAlarmsToArrayOfAPIAlarms(dbAlarms []*databaseModel.Alarm) []*apiModel.AlarmForm {
 	apiAlarms := make([]*apiModel.AlarmForm, 0)
 

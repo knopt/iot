@@ -43,7 +43,8 @@ func setUpRouter(router *gin.Engine, api *apis.Api, corsConfig *cors.Config) {
 			alarm.GET("get/nearest/string/id/:id", api.GetNearestAlarmByDeviceString)
 			alarm.GET("get/id/:id/all", api.GetAlarmsByDevice)
 			alarm.POST("set", api.SetAlarm)
-			alarm.DELETE("/delete/:id", api.DeleteAlarm)
+			alarm.DELETE("/delete/id/:alarmId", api.DeleteAlarm)
+			alarm.DELETE("/delete/nearest/:deviceId", api.DeleteNearestAlarm)
 		}
 		device := allRoutes.Group("device")
 		{
@@ -55,6 +56,7 @@ func setUpRouter(router *gin.Engine, api *apis.Api, corsConfig *cors.Config) {
 		statistics := allRoutes.Group("statistics")
 		{
 			statistics.POST("/", api.InsertStatistic)
+			statistics.POST("/value/:value/device_id/:id/type/:type", api.InsertStatisticInUrl)
 			statistics.GET("/get/device/:id/date/from/:from/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
 			statistics.GET("/get/device/:id/date/to/:to/type/:type", api.GetStatisticsByDeviceDataType)
 			statistics.GET("/get/device/:id/date/from/:from/type/:type", api.GetStatisticsByDeviceDataType)
