@@ -64,7 +64,9 @@ func (api *Api) GetNearestAlarmByDevice(context *gin.Context) {
 		return
 	}
 
-	context.IndentedJSON(http.StatusOK, responseAlarm)
+	resultString := fmt.Sprintf("*%v*", responseAlarm.AlarmTime.Unix())
+
+	context.IndentedJSON(http.StatusOK, resultString)
 }
 
 // GetNearestAlarmByDeviceString get string with nearest alarm
@@ -85,5 +87,26 @@ func (api *Api) GetNearestAlarmByDeviceString(context *gin.Context) {
 // DeleteAlarm by given id
 func (api *Api) DeleteAlarm(context *gin.Context) {
 	fmt.Printf("DeleteAlarm api call. To pe implemented\n")
+	alarmID := context.Param(":alarmId")
+
+	err := api.Service.DeleteAlarm(alarmID)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{"status": "request succeded"})
+}
+
+// DeleteNearestAlarm by given id
+func (api *Api) DeleteNearestAlarm(context *gin.Context) {
+	deviceID := context.Param("deviceId")
+
+	err := api.Service.DeleteNearestAlarm(deviceID)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
 	context.JSON(http.StatusOK, gin.H{"status": "request succeded"})
 }

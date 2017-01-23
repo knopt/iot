@@ -36,6 +36,7 @@ export class StatisticsComponent implements OnInit, OnChanges {
     }
 
     getTypes(): void {
+        console.log("get types!")
         if (this.deviceId) {
             this.statisticService.getTypes(this.deviceId)
                 .then(types => this.types = types)

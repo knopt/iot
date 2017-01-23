@@ -2,6 +2,8 @@ package api
 
 import (
 	"net/http"
+	"strconv"
+	"time"
 
 	"gopkg.in/gin-gonic/gin.v1"
 
@@ -35,6 +37,34 @@ func (api *Api) InsertStatistic(context *gin.Context) {
 	}
 
 	err := api.Service.InsertStatistic(&statisticForm)
+	if err != nil {
+		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
+		return
+	}
+
+	context.String(http.StatusOK, "Success")
+}
+
+//InsertStatisticInUrl from api statistic form
+func (api *Api) InsertStatisticInUrl(context *gin.Context) {
+	var statisticForm model.StatisticForm
+
+	value := context.Param("value")
+	deviceID := context.Param("id")
+	statType := context.Param("type")
+
+	valueFloat, err := strconv.ParseFloat(value, 64)
+	if err != nil {
+		context.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+
+	statisticForm.Value = valueFloat
+	statisticForm.DeviceID = deviceID
+	statisticForm.Type = statType
+	statisticForm.Date = time.Now()
+
+	err = api.Service.InsertStatistic(&statisticForm)
 	if err != nil {
 		error.Handler(&error.Error{Code: http.StatusBadRequest, Err: err}, context)
 		return
