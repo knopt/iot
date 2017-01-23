@@ -62,3 +62,29 @@ func (database *Database) InsertAlarm(alarm *model.Alarm) (*bson.ObjectId, error
 
 	return &alarm.ID, nil
 }
+
+// DeleteAlarm by alarmId
+func (database *Database) DeleteAlarm(alarmID bson.ObjectId) error {
+	return database.db.C("alarm").RemoveId(alarmID)
+}
+
+// DeleteNearestAlarm by deviceID
+func (database *Database) DeleteNearestAlarm(deviceID bson.ObjectId) error {
+	var alarms []*model.Alarm
+	err := database.db.C("alarm").Find(
+		bson.M{
+			"device_id": deviceID,
+			"alarm_time": bson.M{
+				"$gte": time.Now(),
+			},
+		},
+	).Sort("alarm_time").All(&alarms)
+	if err != nil {
+		return err
+	}
+	if len(alarms) == 0 {
+		return nil
+	}
+
+	return database.DeleteAlarm(alarms[0].ID)
+}
